@@ -19,7 +19,7 @@ services:
   web:
     build: .
     volumes:
-      - .:/app
+      - ./credit_approval:/credit_approval  
     ports:
       - "8000:8000"
     depends_on:

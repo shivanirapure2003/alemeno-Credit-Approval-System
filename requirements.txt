@@ -6,3 +6,4 @@ redis
 pandas
 openpyxl
 django-filter
+celery
