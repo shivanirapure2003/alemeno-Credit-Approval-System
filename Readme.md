@@ -15,6 +15,7 @@ The project is **fully dockerized**, uses **PostgreSQL** for database storage, a
 5. [Data Ingestion](#data-ingestion)
 6. [Testing the APIs](#testing-the-apis)
 7. [Tech Stack](#tech-stack)
+8. [Quickstart: Common Commands](#quickstart-common-commands)
 
 ---
 
@@ -150,6 +151,75 @@ Once completed, data will be available in the Django admin panel.
 * **PostgreSQL**
 * **Celery + Redis** for background tasks
 * **Docker & Docker Compose** for containerization
+
+---
+
+## Quickstart: Common Commands
+
+### Build and start the project
+```bash
+docker compose build --no-cache web
+docker compose up -d
+```
+
+### Run migrations and create a superuser
+```bash
+docker compose exec web python manage.py migrate
+docker compose exec web python manage.py createsuperuser
+```
+
+### Import Excel data
+```bash
+docker compose exec web python manage.py import_excel
+```
+
+### Run tests
+```bash
+docker compose exec web python manage.py test loans
+```
+
+### API endpoint tests (curl examples)
+
+Register a customer:
+```bash
+curl -X POST http://localhost:8000/api/register/ \
+  -H "Content-Type: application/json" \
+  -d '{"first_name": "John", "last_name": "Doe", "phone": "1234567890", "monthly_salary": 50000}'
+```
+
+Check eligibility:
+```bash
+curl -X POST http://localhost:8000/api/check-eligibility/ \
+  -H "Content-Type: application/json" \
+  -d '{"customer_id": 1, "loan_amount": 100000, "interest_rate": 10, "tenure": 12}'
+```
+
+Create a loan:
+```bash
+curl -X POST http://localhost:8000/api/create-loan/ \
+  -H "Content-Type: application/json" \
+  -d '{"customer_id": 1, "loan_amount": 100000, "interest_rate": 10, "tenure": 12}'
+```
+
+View a loan:
+```bash
+curl http://localhost:8000/api/view-loan/1/
+```
+
+View all loans for a customer:
+```bash
+curl http://localhost:8000/api/view-loans/1/
+```
+
+List all customers (ViewSet):
+```bash
+curl http://localhost:8000/api/customers/
+```
+
+List all loans (ViewSet):
+```bash
+curl http://localhost:8000/api/loans/
+```
 
 ---
 
