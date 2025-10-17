@@ -66,7 +66,7 @@ credit_approval/
 
 ```bash
 git clone https://github.com/shivanirapure2003/alemeno-Credit-Approval-System.git
-cd credit_approval
+cd alemeno-Credit-Approval-System
 ```
 
 2. Build and start the Docker containers:
